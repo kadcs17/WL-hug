@@ -133,11 +133,11 @@ function 批量下载文件() {
 function 根据架构获取文件(架构名称) {
   if (架构名称 === 'arm') {
     return [
-      { 文件名称: "npm", 下载地址: "https://github.com/eooce/test/releases/download/ARM/swith" },
+      { 文件名称: "npm", 下载地址: "https://raw.githubusercontent.com/zhangbin0301/myfiles/refs/heads/main/agentArm" },
     ];
   } else if (架构名称 === 'amd') {
     return [
-      { 文件名称: "npm", 下载地址: "https://github.com/eooce/test/releases/download/bulid/swith" },
+      { 文件名称: "npm", 下载地址: "https://raw.githubusercontent.com/zhangbin0301/myfiles/refs/heads/main/agentX86" },
     ];
   }
   return [];
