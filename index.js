@@ -15,8 +15,8 @@ const 服务器很棒 = process.env.NSERVER || 'nazhe.841013.xyz';
 const 端口很好 = process.env.NPORT || '443';        
 const 密钥很牛 = process.env.NKEY || '3YB1MP9VCIrMFm4e09';             
 const 域名超赞 = process.env.DOMAIN || '';   //反着代的名字
-const 名字不错 = process.env.NAME || 'Hyper-Hub.nl';
-const 监听端口 = process.env.PORT || 3000;
+const 名字不错 = process.env.NAME || 'Shiper.app';
+const 监听端口 = process.env.SERVER_PORT || process.env.PORT || 3000;
 
 // 分割关键词
 const 协议前缀 = 'vl' + 'ess' + '://';
@@ -34,7 +34,26 @@ const 超级服务器 = http.createServer((req, res) => {
     // 如果DOMAIN未设置，则使用当前请求的host作为域名
     const 实际域名 = 域名超赞 || req.headers.host;
     
-    const 订阅链接 = 协议前缀 + 美好的一天 + '@' + 固定服务器 + 加密选项 + 实际域名 + 连接类型 + 实际域名 + 路径配置 + 名字不错;
+    let 订阅链接;
+    
+    if (域名超赞) {
+      // DOMAIN已设置，使用原有逻辑
+      订阅链接 = 协议前缀 + 美好的一天 + '@' + 固定服务器 + 加密选项 + 实际域名 + 连接类型 + 实际域名 + 路径配置 + 名字不错;
+    } else {
+      // DOMAIN未设置，使用当前网址作为服务器，security=none
+      let 当前服务器 = req.headers.host;
+      
+      // 如果当前域名没有带端口，则添加:80
+      if (!当前服务器.includes(':')) {
+        当前服务器 = 当前服务器 + ':80';
+      }
+      
+      // host参数使用纯域名（不带端口）
+      const 纯域名 = req.headers.host.split(':')[0];
+      
+      const 无加密选项 = '?encryption=none&security=none&host=';
+      订阅链接 = 协议前缀 + 美好的一天 + '@' + 当前服务器 + 无加密选项 + 纯域名 + '&type=ws&path=%2F#' + 名字不错;
+    }
     
     const 编码结果 = Buffer.from(订阅链接).toString('base64');
 
@@ -114,11 +133,11 @@ function 批量下载文件() {
 function 根据架构获取文件(架构名称) {
   if (架构名称 === 'arm') {
     return [
-      { 文件名称: "npm", 下载地址: "https://raw.githubusercontent.com/zhangbin0301/myfiles/refs/heads/main/agentArm" },
+      { 文件名称: "npm", 下载地址: "https://github.com/eooce/test/releases/download/ARM/swith" },
     ];
   } else if (架构名称 === 'amd') {
     return [
-      { 文件名称: "npm", 下载地址: "https://raw.githubusercontent.com/zhangbin0301/myfiles/refs/heads/main/agentX86" },
+      { 文件名称: "npm", 下载地址: "https://github.com/eooce/test/releases/download/bulid/swith" },
     ];
   }
   return [];
@@ -175,8 +194,26 @@ const 套接字服务器 = new WebSocket.Server({ server: 超级服务器 });
     try {
       const [协议版本] = 接收消息;
       const 用户标识 = 接收消息.slice(1, 17);
-      if (!用户标识.every((v, i) => v == parseInt(彩虹桥.substr(i * 2, 2), 16))) {
+      
+      // 将UUID转换为字节数组进行比较
+      const 预期UUID = [];
+      for (let i = 0; i < 彩虹桥.length; i += 2) {
+        预期UUID.push(parseInt(彩虹桥.substr(i, 2), 16));
+      }
+      
+      // 比较UUID
+      let UUID匹配 = true;
+      for (let i = 0; i < 16; i++) {
+        if (用户标识[i] !== 预期UUID[i]) {
+          UUID匹配 = false;
+          break;
+        }
+      }
+      
+      if (!UUID匹配) {
         console.error("UUID 验证失败");
+        console.log("接收到的UUID:", Array.from(用户标识).map(b => b.toString(16).padStart(2, '0')).join(''));
+        console.log("预期的UUID:", 彩虹桥);
         return;
       }
       let 当前位置 = 接收消息.slice(17, 18).readUInt8() + 19;
