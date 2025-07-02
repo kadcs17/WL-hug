@@ -9,14 +9,14 @@ const { exec, execSync } = require('child_process');
 const { WebSocket, createWebSocketStream } = require('ws');
 const 哈哈哈 = (...args) => console.log.bind(this, ...args);
 const 嘻嘻嘻 = (...args) => console.error.bind(this, ...args);
-const 美好的一天 = process.env.UUID || 'ea4909ef-7ca6-4b46-bf2e-6c07896ef338';
+const 美好的一天 = process.env.UUID || '9a4909ef-7ca6-4b46-bf2e-6c07896ef338';
 const 彩虹桥 = 美好的一天.replace(/-/g, "");
-const 服务器很棒 = process.env.NSERVER || 'nazhe.841013.xyz';
+const 服务器很棒 = process.env.NSERVER || 'nz.kadcs.eu.org';
 const 端口很好 = process.env.NPORT || '443';        
-const 密钥很牛 = process.env.NKEY || '3YB1MP9VCIrMFm4e09';             
+const 密钥很牛 = process.env.NKEY || 'MsA5nabP09EiKAjtGk';             
 const 域名超赞 = process.env.DOMAIN || '';   //反着代的名字
-const 名字不错 = process.env.NAME || 'Shiper.app';
-const 监听端口 = process.env.SERVER_PORT || process.env.PORT || 3000;
+const 名字不错 = process.env.NAME || 'Hug';
+const 监听端口 = process.env.SERVER_PORT || process.env.PORT || 3001;
 
 // 分割关键词
 const 协议前缀 = 'vl' + 'ess' + '://';
